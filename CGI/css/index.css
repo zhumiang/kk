@@ -1,0 +1,35 @@
+
+body{
+	margin: 0px;
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	background-color: #ffffff;
+	line-height:150%;
+	letter-spacing:2px; 
+}
+*{margin:0px auto; padding:0px;}
+#header,#main,#footer{width:99%; height:auto; display:block;}
+#header ul li{ list-style:none; float:left;}
+#main ul li {list-style:none;}
+#main ul{margin-left:0px;}
+a{color:#333;text-decoration:none;}
+a:hover{ color:#FF0000;} 
+img {border:0px;}
+.clear{ clear:both; font:0/0 Arial;}
+.top{border: 1px solid #D4D0C8; width:100%; height:90px; background-color:#4e8099;}
+.top a{color:#ffffff;font-size:16px; padding:20px;float:left;}
+.menu{font-size:16px; width:80%;}
+.menu li{padding-right:30px;}
+table tr{background:#ffffff; height:28px;text-indent:8px;line-height:180%;}
+.content{border: 1px solid #D4D0C8; width:82%; height:auto; font-size:16px; text-indent:10px;margin-top:20px;}
+.listview{width:82%; height:auto; margin-top:20px; font-size:14px; text-indent:10px;}
+.title{ color:#42b8ea; text-align:center;font-size:18px; font-weight:bold;}
+.title2{text-align:center; font-size:12px;color:#ccc;}
+.page{ font-size:14px; text-align:center; height:30px; line-height:30px;}
+.footer{background:#F6F6F6;border: 1px solid #D4D0C8; width:100%; height:50px;}
+.register{border: 2px solid #7acbe9; float:left;color:#346b94;margin-left:200px;margin-top:30px;padding-top:10px;font-size:16px;}
+.register .input{border: 1px solid #D4D0C8;}
+.left{float:left;padding:10px;}
+.right{float:left;padding:10px;}
+.option{float:right;padding-right:10px;padding-bottom:10px;}
+.ttop{float:right;margin-right:130px;padding:5px;border: 1px solid #7acbe9; }
