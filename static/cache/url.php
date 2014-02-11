@@ -35,7 +35,7 @@
 		'havelogin'		=>'此帐户正在别处登录',
 		'unknown'		=>'失败',
 		'nologin'		=>'没有登录',
-		'filewrong'		=>'提交失败',
+		'filewrong'		=>'文件不存在',
 		'datawrong'		=>'失败',
 		'upwrong'		=>'失败',
 		'updirwrong'	=>'失败',
@@ -47,6 +47,7 @@
 		'fieldsame'		=>'失败',
 		'fieldwrong'	=>'失败',
 		'checkcode'		=>'验证失败',
+		'updateorder'	=>'获取订单存在失败的站点',
 	),
 	'login'=>array(
 		'default'		=>'登录成功',

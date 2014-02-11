@@ -11,7 +11,6 @@
 </head>
 <body>
 <?php 
-kelemonitor::power('show','sectoralplan');
 if($GLOBALS['POWER'][$this->view]['search']){
 $search=kelefunction::seachmemu($this->view);
 if($search){
@@ -43,6 +42,7 @@ $i=0;
 <a href="<?php echo http_dir?>?model=append&contro=function&view=<?php echo $this->view?>">AddFrom</a>&nbsp;
 <?php }?>
 <a href="<?php echo http_dir?>?model=show&contro=function&view=<?php echo $this->view?>">ShowForm</a>
+<a href="<?php echo http_dir?>?model=show&contro=updateorder&view=<?php echo $this->view?>">update order</a>
 </div>
 <?php if(keledata::httpval('id')){
 	$memu=kelefunction::memu($this->view,'all');
@@ -57,7 +57,8 @@ $i=0;
       </table>
 <?php }else{?>
   <form name="list" action="<?php echo http_dir?>?model=delete&contro=function&view=<?php echo $this->view?>" method="post">
-	  <table width="90%" border="0" cellpadding="0" cellspacing="1" bgcolor="#C9C9C9" style="margin:10px;">
+<div style="margin-left:10px;width:90%;height:500px;overflow:scroll;">
+  <table border="0" cellpadding="0" cellspacing="1" bgcolor="#C9C9C9">
 	  <tr>
 	  <td>Select</td>
 <?php
@@ -84,15 +85,13 @@ $i=0;
         <a href="<?php echo http_dir?>?model=amend&contro=function&view=<?php echo $this->view?>&id=<?php echo $value['id']?>">Modify</a>&nbsp;
         <?php }?>
         <?php if($GLOBALS['POWER'][$this->view]['delete']){?>
-        <a href="<?php echo http_dir?>?model=delete&contro=function&view=<?php echo $this->view?>&id=<?php echo $value['id']?>" onClick="return confirm('Are you sure you want to delete?');" >Delete</a>&nbsp;
-		<?php }?>
-		<?php if($GLOBALS['POWER']['sectoralplan']['append']){?>
-        <a href="<?php echo http_dir?>?model=append&contro=function&view=sectoralplan&pid=<?php echo $value['id']?>">新增部门计划</a>&nbsp;
+        <a href="<?php echo http_dir?>?model=system&contro=function&view=<?php echo $this->view?>&id=<?php echo $value['id']?>&system=ispass&ispass=0" onClick="return confirm('Are you sure you want to delete?');" >Delete</a>&nbsp;
 		<?php }?>
 		</td>
       </tr>
       <?php }}?>    
 </table>
+</div>
  <div style="width:40%;float:left;margin:10px;" align="right">
 	<input type="button" name="button" value="select all" onclick="checkall()">
 	<?php if($GLOBALS['POWER'][$this->view]['delete']){?>
