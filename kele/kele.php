@@ -34,6 +34,7 @@ class kelekele{
 			define('http_dir',$http_dir);
 			define('kele_dir',$dir);
 			define('kele_start',true);
+			define('kele_debug',false);
 			define('tpl_dir','tpl/kele/');
 		}else exit;
 		require(kele_dir.'app/index.php');

@@ -56,6 +56,7 @@ class keledb {
 	}
 	
 	public function query($sql, $type = '') {
+		global $property;
 		$func = $type == 'unbuffered' && @function_exists('mysql_unbuffered_query') ?
 			'mysql_unbuffered_query' : 'mysql_query';
 		if(!($query = $func($sql,$this->link))) {
@@ -67,7 +68,10 @@ class keledb {
 				keledb::halt('MySQL Query Error', $sql);
 			}
 		}
-
+		if(kele_debug)
+			echo $sql;
+		if($property=='kele')
+			kelefile::writefile("static/cache/sql/","update.sql",$sql,"a");
 		$this->querynum++;
 		return $query;
 	}

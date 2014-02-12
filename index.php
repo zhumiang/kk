@@ -19,6 +19,7 @@ class kelecms{
 		$this->area = 'index';
 		$this->power = 'member';
 		define('kele_start',true);		
+		define('kele_debug',false);
 		$http_dir="http://".$_SERVER ['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
 		define('http_dir',$http_dir.'/');
 		define('kele_dir', dirname(__FILE__).'/');

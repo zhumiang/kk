@@ -9,9 +9,11 @@ function element($type,$name,$defult="",$value="",$size="",$view=""){
 			$defult=array();		
 			if($array[0]=="sql"){
 				$defult=keledatabase::getrows(keledata::resolve(keledata::htmlchars_decode($array[1]),$value),1);
-				if($array[2]){
-					$temp=explode(":", $array[2]);
-					array_unshift($defult,array('value'=>$temp[0],'name'=>$temp[1]));
+				if(count($array)>2){
+					for($i=2;$i<count($array);$i++){
+						$temp=explode(":", $array[$i]);
+						array_unshift($defult,array('value'=>$temp[0],'name'=>$temp[1]));
+					}
 				}
 			}else {
 				$i=0;
@@ -101,7 +103,7 @@ function element($type,$name,$defult="",$value="",$size="",$view=""){
 			return $html;
 		case "edithtml":
 			if($view!='read'){
-				$html="<input type=\"hidden\" id=\"".$name."\" name=\"".$name."\" value=\"".$value."\" style=\"display:none\" /><br><iframe src=\"".http_dir."editor/editor.htm?id=".$name."&ReadCookie=0\" frameBorder=\"0\" marginHeight=\"0\" marginWidth=\"0\" scrolling=\"No\" width=\"700\" height=\"480\"></iframe>";
+				$html="<input type=\"hidden\" id=\"".$name."\" name=\"".$name."\" value=\"".$value."\" style=\"display:none\" /><br><iframe src=\"".http_dir."/lib/editor/editor.htm?id=".$name."&ReadCookie=0\" frameBorder=\"0\" marginHeight=\"0\" marginWidth=\"0\" scrolling=\"No\" width=\"700\" height=\"480\"></iframe>";
 			}else{
 				$html=keledata::htmlchars_decode($value);
 			}

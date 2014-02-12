@@ -210,11 +210,11 @@ class kelefunction {
 		if(!$lord)kele::exception('error',"columnwrong");
 		$table=keledatabase::getarray(array("kele_table","kele_relation"),array("kele_relation.lord=".$lord['id'],
 				"kele_table.id=kele_relation.schedule"),array("kele_table.*","kele_relation.wheres"));
-		if($parameter['search']==true)$fields=kelefunction::seachmemu($view);
+		if($parameter['search']==true)$sfields=kelefunction::seachmemu($view);
 		$table[]=$lord;
 		foreach ($table as $value){	
-			if($fields){
-				foreach ($fields['element'][$value['classify']] as $val) {
+			if($sfields){
+				foreach ($sfields['element'][$value['classify']] as $val) {
 					if($val['type']){
 						$result=keledatabase::getsearchvalue($value['value'],$value['classify'],$val['field'],$val['type']);
 						if($result){

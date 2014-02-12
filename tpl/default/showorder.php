@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $GLOBALS['KELE']['charset_kele']?>" />
 <link href="<?php echo http_dir?>CGI/css/admincss.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo http_dir?>CGI/js/jquery.js"></script>
 <title><?php echo $GLOBALS['KELE']['title']?></title>
 
 </head>
@@ -25,8 +26,11 @@ Search With
 $i=0;
       	foreach ($search['element'] as $searchfields){
       	foreach($searchfields as $val){
-      		$i++;      		
+      		$i++;      		   		
       		echo"<td>".$val['name']."</td><td>&nbsp;&nbsp;".element($val['type'],$val['classify']."[".$val['field']."]",$val['defaults'],$GLOBALS['SEARCH'][$val['classify']][$val['field']],$val['size'])."</td>";      		
+      		if($val['type']=="time"){
+      			echo"<td>to</td><td>&nbsp;&nbsp;".element($val['type'],$val['classify']."[".$val['field']."1]",$val['defaults'],$GLOBALS['SEARCH'][$val['classify']][$val['field']."1"],$val['size'])."</td>";
+      		}
       		if($i%4==0)echo "</tr><tr>";
       	}}?>    	
 <td align="center" <?php $i++; if($i%4!=0)echo "colspan=".((4-($i%4)+1)*2); ?>>
@@ -43,6 +47,9 @@ $i=0;
 <?php }?>
 <a href="<?php echo http_dir?>?model=show&contro=function&view=<?php echo $this->view?>">ShowForm</a>
 <a href="<?php echo http_dir?>?model=show&contro=updateorder&view=<?php echo $this->view?>">update order</a>
+<span class="fl">
+	<a href="<?php echo http_dir?>?model=down&contro=csv&view=<?php echo $this->view?>" onclick=" return down(this)">down</a>
+</span>
 </div>
 <?php if(keledata::httpval('id')){
 	$memu=kelefunction::memu($this->view,'all');
@@ -56,10 +63,10 @@ $i=0;
       	<?php }?>
       </table>
 <?php }else{?>
-  <form name="list" action="<?php echo http_dir?>?model=delete&contro=function&view=<?php echo $this->view?>" method="post">
-<div style="margin-left:10px;width:90%;height:500px;overflow:scroll;">
+  <form name="list" action="<?php echo http_dir?>?model=system&contro=function&view=<?php echo $this->view?>&id=<?php echo $value['id']?>&system=ispass&ispass=0" method="post">
+<div style="margin-left:10px;margin-top:10px;width:90%;height:500px;overflow:scroll;">
   <table border="0" cellpadding="0" cellspacing="1" bgcolor="#C9C9C9">
-	  <tr>
+	  <tr class="title">
 	  <td>Select</td>
 <?php
   $field=kelefunction::memu($this->view,'list');
@@ -76,6 +83,8 @@ $i=0;
 	  	echo"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"".$value['id']."\"></td>";
 	  	foreach ($field['element'] as $fields){
       	foreach($fields as $k => $val){
+			if($val['field']=="price_to_rmb")
+				$value[$val['field']]=round(6.25*$value[$val['field']],2);
 	  ?>
         <td><?php echo element($val['type'],$val['classify']."[".$val['field']."]",$val['defaults'],$value[$val['field']],$val['size'],'read')?></td>
 <?php }}?>
@@ -113,6 +122,19 @@ function checkall(){
 			}
 		}
 
+	}
+}
+function down(obj){
+	var seach=false;
+	<?php if($search){?>
+	seach=true;
+	<?php }?>
+	if(seach){		
+		$("form[name='<?php echo $search['memu']['value']?>']").attr('action',obj.href);
+		$("form[name='<?php echo $search['memu']['value']?>']").submit();
+		return false;
+	}else{
+		return true;
 	}
 }
 </script>

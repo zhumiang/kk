@@ -229,10 +229,17 @@ class keledatabase {
 				$data=keledata::httpval($parent);
 				if($data[$field]){
 					$GLOBALS['SEARCH'][$parent][$field]=$data[$field];
+					if(isset($data[$field."1"]))
+						$GLOBALS['SEARCH'][$parent][$field."1"]=$data[$field."1"];
 					keledata::strval($data);
-					if($data[$field]&&$data[$field1])$where[]=$table.".".$field.">='".$data[$field]."' and ".$table.".".$field."<='".$data[$field1]."'";
-					elseif ($data[$field]) $where[]=$table.".".$field."='".$data[$field]."'";
-					$where[]='&'.$parent.'['.$field.']='.$data[$field];
+					if($data[$field]&&$data[$field."1"]){
+						$where[]=$table.".".$field.">='".$data[$field]."' and ".$table.".".$field."<='".$data[$field."1"]."'";
+						$where[]='&'.$parent.'['.$field.']='.$data[$field].'&'.$parent.'['.$field.'1]='.$data[$field.'1'];
+					}
+					elseif ($data[$field]) {
+						$where[]=$table.".".$field."='".$data[$field]."'";	
+						$where[]='&'.$parent.'['.$field.']='.$data[$field];
+					}
 				}
 				break;						
 		}

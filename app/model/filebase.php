@@ -17,7 +17,7 @@ class kelefile {
 	
 	private $data;
 
-	public function kelefile($rootpath="",$power=""){
+	public function kelefile($rootpath=kele_dir,$power=""){
 		$this->power = $power;
 		$this->rootpath = $rootpath;
 		if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN')$this->system='win';
@@ -46,7 +46,7 @@ class kelefile {
 
 	public function makedir($dir){
 		$d = explode("/", $dir);
-		$folder = $this->rootpath."/";
+		$folder = kele_dir;
 		for ($i = 0; $i < count($d); ++$i){
 			if(!$d[$i])continue;
 		    $folder .= "{$d[$i]}/";
@@ -139,8 +139,15 @@ class kelefile {
 		
 	}
 
-	public function writefile(){
-		
+	public function writefile($path,$filename,$text,$type="w"){
+		if(!file_exists($path)){
+			kelefile::makedir($path);
+		}
+		$fh = fopen(kele_dir.$path.$filename, $type);
+		if($fh){
+			fwrite($fh, $text);
+		}
+		fclose($fh);
 	}
 	
 	public function eidtfile(){
@@ -171,7 +178,7 @@ class kelefile {
 	}
 
 
-	public function miniImg($sourceImg,$width,$height,$quality=85){
+	public function miniImg($sourceImg,$width,$height,$quality=85,$deltmp=false){
 		//if(strtolower(end(explode('.',$sourceImg))) == 'gif') return $sourceImg;	
 		global $imgmodel;
 		kele::getinclass("app_model_img");
@@ -180,6 +187,9 @@ class kelefile {
 		list($sourceImg,$targetImg,$SmallImg) = $imgmodel->getAttachPath($sourceImg);
 		if(!is_file($targetImg)){
 			 $imgmodel->resize_image($sourceImg,$targetImg,$width,$height,$quality);
+		}
+		if($deltmp){
+			unlink($sourceImg);
 		}
 		return $SmallImg;
 	}

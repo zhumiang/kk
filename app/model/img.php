@@ -28,8 +28,9 @@ class keleimg{
 			$file_ext = end(explode('.',$imgsrc));
 			$imgname = substr(md5($imgsrc),10,10).'.'.$file_ext;
 			//$savedir = $this->saveDir();
+			kelefile::makedir('CGI/upload/img/'.date('ymd'));
 			$SourceImg = $temppath.$imgname; //绝对路径
-			$SmallImg = 'CGI/upload/img/'.$nameadd.$imgname;
+			$SmallImg = 'CGI/upload/img/'.date('ymd').'/'.$nameadd.$imgname;
 			$TargetImg = kele_dir.$SmallImg;
 			if(!file_exists($SourceImg)) getContent::copy($imgsrc,$SourceImg);
 			/* 将图片保存至本地 */

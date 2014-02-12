@@ -42,7 +42,7 @@ $i=0;
 
   <form name="list" action="kele.php?model=delete&contro=function&view=<?php echo $this->view?>" method="post">
 	  <table width="90%" border="0" cellpadding="0" cellspacing="1" bgcolor="#C9C9C9" style="margin:10px;">
-	  <tr>
+	  <tr class="title">
 	  <td>Select</td>
 <?php
   $field=kelefunction::memu($this->view,'list');

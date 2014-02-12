@@ -1,11 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * this is Redevelopment tcpdf
- * @author  zhuming
- * @version  testlink_1.24.2.6
- * @deprecated D:\wamp\www\Heprintedon\system\application\models\csv_z.php
- * Fri Apr 09 14:17:47 CST 2010
- */
+<?php
 
 class kelecsv{
 	
@@ -51,7 +44,7 @@ class kelecsv{
 	 * @param string $folder
 	 * @return boolean
 	 */
-	public function csv_use($folder = null){
+	public function kelecsv($folder = null){
 		//$this->config->load('ftp_config',true);
 		//$this->ftp_config_arr = $this->config->item('ftp_config');
 		$this->is_ftp = false;
@@ -88,6 +81,9 @@ class kelecsv{
 				return array($file_ftp,$file_local,false);
 			}
 		}else {
+			if(!file_exists($this->file_path)){
+				@mkdir($this->file_path,0777);
+			}
 			if (is_file($file_local)) {
 				return array(null,$file_local,true);
 			}else{
@@ -105,8 +101,8 @@ class kelecsv{
 	 */
 	public function csv_write($file_local,$data){
 		if ($file_local && $data) {
-			$this->load->helper('file');
-			if ( ! write_file($file_local,$data)) {
+			
+			if ( ! file_put_contents($file_local,$data)) {
 				return false;
 			}else {
 				return true;
@@ -141,27 +137,42 @@ class kelecsv{
 	public function csv_query($query,$num,$array,$v_or_h = 'vertical',$file_name='',$is_output=true){
 		$keys = array_keys($array);
 		$key=0;
-		foreach ($query as $value){
-			if(isset($value['create_time'])){
-				if(!$value['export_time']) $is_output = true;
-				elseif ($value['export_time'] && !$value['upadte_time']) $is_output = false;
-				elseif ($value['export_time'] && $value['upadte_time'] && $value['upadte_time'] != $value['export_time']) 
-				$is_output = true;
-				else $is_output = false;
-			}
+		foreach ($query as $value){			
 			$result = true;
+			$otherkey=array();
 			if(!$file_name)$file_name = $this->folder.'_csv_' . $value['id'];
 			list($file_ftp,$file_local,$is_saved) = $this->csv_file_get($file_name);
 			if (!$is_saved || ($is_saved && $is_output)) {	
 				if ($v_or_h == 'vertical') {
 					foreach ($value as $k => $val){
 						if (in_array($k,$keys)) {
-							$array[$k]['value'] = $val;						
+							$array[$k]['value'] = $val;
 						}
 					}
 				}elseif ($v_or_h == 'horizontal') {
-					foreach ($array['header'] as $k=>$val){
-						$line[$k] = isset($value[$k])?$value[$k]:null;
+					foreach ($array['header'] as $k=>$val){						
+						if(strpos($k,"|")){
+							$line[$k] = kelecsv::makeforcsvline($k,$value);
+						}else{
+							if(isset($value[$k."1"])){
+								$otherkey[]=$k;
+							}
+							$line[$k] = isset($value[$k])?$value[$k]:null;
+						}
+					}
+					if($otherkey){	
+						$break=false;
+						$i=1;
+						while ($i<100){							
+							foreach ($otherkey as $tm){							
+								if(isset($value[$tm.$i]))
+									$line[$tm.$i] = $value[$tm.$i];
+								else
+									$break=true;								
+							}
+							if($break)break;
+							$i++;
+						}
 					}
 				}		
 				if(($key+1) == $num) $close = true;else $close = false;
@@ -177,12 +188,12 @@ class kelecsv{
 				
 			}
 			if ($result) {
-				$file_list[$key]['id'] = $value['id'];
+				$file_list[0]['id'] = $value['id'];
 				if ($this->is_ftp) {
 					$file_list[$key]['file'] = $file_ftp;
 					if(!$is_saved) unlink($file_local);
 				}else{
-					$file_list[$key]['file'] = $file_local;
+					$file_list[0]['file'] = $file_local;
 				}
 			}elseif(!$result && $v_or_h == 'vertical'){
 				$file_list[$key]['id'] = $value['id'];
@@ -192,7 +203,40 @@ class kelecsv{
 		}
 		return $file_list;
 	}
-	
+	public function makeforcsvline($code,$arr){
+		$listcode=explode("|", $code);
+		$return=null;
+		switch ($listcode[0]){
+			case 'math':
+				if (strrpos($listcode[1], ",")){
+					$keys=explode(",", $listcode[1]);
+				}else{
+					$keys=array($listcode[1]);
+				}
+				$math=$listcode[2];
+				foreach ($keys as $n=>$k){
+					if(isset($arr[$k]))					
+						$math=str_replace("{".$n."}", $arr[$k], $math);
+				}	
+				$return=round(eval("return $math;"),2);
+				break;
+			case 'str':
+				if (strrpos($listcode[1], ",")){
+					$keys=explode(",", $listcode[1]);
+				}else{
+					$keys=array($listcode[1]);
+				}
+				foreach ($keys as $n=>$k){
+					if(isset($arr[$k]))
+						$val[]=$arr[$k];
+				}
+				$return=implode($listcode[2], $val);
+				break;
+			case 'fun':
+				break;
+		}
+		return $return;
+	}
 	/**
 	* Array to CSV
 	*
@@ -207,6 +251,9 @@ class kelecsv{
 		foreach ( $array as $line )
 		{
 			$n ++;
+			foreach ($line as $k=>$item){
+				$line[$k]='="'.iconv("utf-8", "gb2312",keledata::htmlchars_decode($item)).'"';
+			}
 			if ( ! fputcsv ( $f , $line ))
 			{
 				show_error ( "Can't write line $n: $line" );
@@ -218,6 +265,55 @@ class kelecsv{
 		$true = $this->csv_write($file_local,$str);
 		if ($this->is_ftp && $true && $file_ftp) $true = $this->csv_upload($file_local,$file_ftp,$close);
 		return $true;
+	}
+	public function csv_to_array($file){
+		$arr=array();
+		if(!file_exists($file))
+			return false;
+		$file = fopen($file,"r");
+		if($file){
+			while ($data = fgetcsv($file)) {
+				$arr[]=$data;
+			}			
+		}
+		fclose($file);		
+		return $arr;
+	}
+	public function csvtoxls($csv){
+		$xls=str_replace(".csv", ".xls", $csv);
+		kele::getinclass("lib_PHPExcel");
+		$objPHPExcel = new PHPExcel();		
+		$arr=kelecsv::csv_to_array($csv);
+		$cellline=array();
+		 foreach ($arr as $n => $val){
+		 	foreach ($val as $m => $str){
+		 		if($m>26)kele::exception('error','xlsovercell');
+		 		$cell=chr(ord('A')+$m);
+		 		$row =$n+1;
+		 		if(!in_array($cell, $cellline)){
+		 			array_push($cellline, $cell);
+		 			$objPHPExcel->getActiveSheet()->getColumnDimension($cell)->setWidth(30);
+		 		}
+		 		if($n>0&&$m==0){
+		 			$objPHPExcel->getActiveSheet()->getRowDimension($row)->setRowHeight(90);		 			
+		 		}
+		 		$objPHPExcel->getActiveSheet()->getStyle($cell.$row)->getAlignment()->setWrapText(true);
+		 		if(stripos($str, ".jpg")&&file_exists(kele_dir.$str)){
+		 			$objDrawing = new PHPExcel_Worksheet_Drawing();
+		 			$objDrawing->setPath($str);
+		 			$objDrawing->setHeight(100);
+		 			$objDrawing->setWidth(100);
+		 			$objDrawing->setCoordinates($cell.$row);
+		 			$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+		 		}
+		 		else
+					$objPHPExcel->getActiveSheet()->setCellValue($cell.$row, iconv('gb2312', 'utf-8',$str));
+		 	}
+		}
+		$objPHPExcel->setActiveSheetIndex(0);
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+		$objWriter->save($xls);
+		return $objWriter;
 	}
 }
 ?>

@@ -46,6 +46,7 @@ class indexupdateorder {
 				}
 				eval("\$orders = $getval;");
 				keledata::pushmsg("已获取".$val['name']."的订单正在导入数据库.....");
+				$orders=keledata::addval($orders);
 				foreach ($orders as $value){
 					if(!isset($value['products'])){
 						continue;
@@ -66,7 +67,7 @@ class indexupdateorder {
 					foreach ($value['products'] as $product){
 						if(substr($product['products_image'],0,5)!="http:")
 							$img=$val['value']."/".$product['products_image'];
-						$img=kelefile::miniImg($img,100,100);
+						$img=kelefile::miniImg($img,100,100,true);
 						$insert=array($product['products_model'],$product['products_name'],$img,
 								$inertid,$product['product_option']);
 						$fields=array('product_itemid','product_name','product_img','order_id','product_options');
