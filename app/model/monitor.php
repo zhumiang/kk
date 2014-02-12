@@ -63,9 +63,11 @@ class kelemonitor {
 		global $time_start;
 		keledatabase::close();
 		usleep(100);
-		$time_end = kelemonitor::microtime_float();
-		$time = $time_end - $time_start;
-		echo $time;
+		if(kele_debug){
+			$time_end = kelemonitor::microtime_float();
+			$time = $time_end - $time_start;
+			echo $time;
+		}
 		exit();
 	}
 

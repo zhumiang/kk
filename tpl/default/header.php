@@ -20,7 +20,7 @@ body {margin: 0px; font-size:12px;}
 a{ text-decoration:none;}
 img {border:none;vertical-align:middle;}
 ul li{list-style:none;}
-.header{ width:100%; height:90px; background:url(<?php echo http_dir?>CGI/images/kele/headerbg.png);}
+.header{ width:100%; height:52px; background:url(<?php echo http_dir?>CGI/images/kele/headerbg.png);}
 .log{ margin:0px;}
 .tabula{ width:100%; height:28px; background:url(<?php echo http_dir?>CGI/images/kele/tabula.png);}
 .menu{width:1003px; font-size:14px; float:right; height:37px; margin-top:-30px;}
@@ -42,7 +42,7 @@ function time(){
 </head>
 <body onload="time()">
 <div class="header">
-<div class="log"><img src="<?php echo http_dir?>CGI/images/kele/log.png" border="0" height="90" /></div>
+<div class="log"><img src="<?php echo http_dir?>CGI/images/kele/log.png" border="0" /></div>
 <div class="menu">
 <ul>
 <?php 

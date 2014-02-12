@@ -47,7 +47,7 @@
 		'fieldsame'		=>'失败',
 		'fieldwrong'	=>'失败',
 		'checkcode'		=>'验证失败',
-		'updateorder'	=>'获取订单存在失败的站点',
+		'updateorder'	=>'获取订单结束',
 		'nofiletodown'	=>'没有文件可下载',
 		'xlsovercell'	=>'xls下载时，超出列宽',
 	),
