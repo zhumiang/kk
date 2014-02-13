@@ -24,7 +24,8 @@ class keleimg{
 		} 
 		$SourceImg = $TargetImg = $SmallImg ='';
 		if (strpos($imgsrc,'http://')==0){ //说明是一个网址
-			$temppath = kele_dir.'CGI/upload/temp/'; //此路径为临时图片保存目录
+			kelefile::makedir('CGI/upload/temp/'.date('ymd'));
+			$temppath = kele_dir.'CGI/upload/temp/'.date('ymd')."/"; //此路径为临时图片保存目录
 			$file_ext = end(explode('.',$imgsrc));
 			$imgname = substr(md5($imgsrc),10,10).'.'.$file_ext;
 			//$savedir = $this->saveDir();

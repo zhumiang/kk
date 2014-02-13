@@ -23,7 +23,7 @@ ul li{list-style:none;}
 .header{ width:100%; height:52px; background:url(<?php echo http_dir?>CGI/images/kele/headerbg.png);}
 .log{ margin:0px;}
 .tabula{ width:100%; height:28px; background:url(<?php echo http_dir?>CGI/images/kele/tabula.png);}
-.menu{width:1003px; font-size:14px; float:right; height:37px; margin-top:-30px;}
+.menu{width:1003px; font-size:14px; float:right; margin-top:-30px;}
 .menu a{color:#000000; }
 .menu ul{float:right; width:60%; height:30px; line-height:30px;}
 .menu ul li{float:left; width:83px; margin-left:3px; text-align:center; background:url(<?php echo http_dir?>CGI/images/kele/menulist1.png);}

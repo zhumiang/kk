@@ -51,6 +51,8 @@ class indexupdateorder {
 					if(!isset($value['products'])){
 						continue;
 					}
+					if(isset($value['customers_telephone2']))
+						$value['customers_telephone2']="";
 					$address="name:".$value['delivery_name']."<br>"."street address:".
 						$value['delivery_street_address']."<br>city:".$value['delivery_city'].
 						"<br>state:".$value['delivery_state']."<br>country:".
@@ -74,6 +76,7 @@ class indexupdateorder {
 						keledatabase::insert($insert,"order_product",$fields);
 					}
 					keledata::pushmsg("成功导入一条订单".$val['name'].$value['orders_id']."....");
+					exit;
 				}
 			}else{
 				$error=true;

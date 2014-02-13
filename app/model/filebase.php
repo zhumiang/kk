@@ -178,7 +178,7 @@ class kelefile {
 	}
 
 
-	public function miniImg($sourceImg,$width,$height,$quality=85,$deltmp=false){
+	public function miniImg($sourceImg,$width,$height,$quality=85){
 		//if(strtolower(end(explode('.',$sourceImg))) == 'gif') return $sourceImg;	
 		global $imgmodel;
 		kele::getinclass("app_model_img");
@@ -187,9 +187,6 @@ class kelefile {
 		list($sourceImg,$targetImg,$SmallImg) = $imgmodel->getAttachPath($sourceImg);
 		if(!is_file($targetImg)){
 			 $imgmodel->resize_image($sourceImg,$targetImg,$width,$height,$quality);
-		}
-		if($deltmp){
-			unlink($sourceImg);
 		}
 		return $SmallImg;
 	}

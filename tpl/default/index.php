@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $GLOBALS['KELE']['charset_kele']?>"/>
 <title><?php echo $GLOBALS['KELE']['title']?></title>
 </head>
-	<frameset rows="120,*" cols="*" frameborder="no" border="0" framespacing="0">
+	<frameset rows="80,*" cols="*" frameborder="no" border="0" framespacing="0">
 	  <frame src="<?php echo http_dir?>?model=show&contro=function&view=header" name="topFrame" scrolling="No" noresize="noresize" id="topFrame" title="topFrame" />
 	  <frameset cols="220,*" frameborder="no" border="0" framespacing="0">
 		<frame src="<?php echo http_dir?>?model=show&contro=function&view=left" name="leftFrame" scrolling="auto" noresize="noresize" id="leftFrame" title="leftFrame" />

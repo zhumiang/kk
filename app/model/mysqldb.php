@@ -71,7 +71,7 @@ class keledb {
 		if(kele_debug)
 			echo $sql;
 		if($property=='kele')
-			kelefile::writefile("static/cache/sql/","update.sql",$sql,"a");
+			kelefile::writefile("static/cache/sql/","update.sql",$sql.chr(10),"a");
 		$this->querynum++;
 		return $query;
 	}
