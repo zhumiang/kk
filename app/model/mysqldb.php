@@ -70,8 +70,8 @@ class keledb {
 		}
 		if(kele_debug)
 			echo $sql;
-		if($property=='kele')
-			kelefile::writefile("static/cache/sql/","update.sql",$sql.chr(10),"a");
+		if(defined("kele_model_sql")&&substr($sql, 0,6)!="select"&&!stripos($sql, "kele_useron"))
+			kelefile::writefile("static/cache/sql/","update.sql",$sql.";".chr(10),"a");
 		$this->querynum++;
 		return $query;
 	}
