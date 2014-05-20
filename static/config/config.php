@@ -9,10 +9,10 @@
  !defined('kele_start') && die('NOTFINDE');
   global $dbmation;
  $dbmation = array(
-	'dbhost'		=>	'192.168.1.108:3306',		
+	'dbhost'		=>	'127.0.0.1',		
 	'dbuser'		=>	'admin',	
 	'dbpw'			=>	'admin',			
-	'dbname'		=>	'develop_saas',		
+	'dbname'		=>	'kele',		
 	'database'		=>	'mysql',		
 	'pconnect'		=>	'0',
  	'charset'		=>	'utf-8', 		 	
