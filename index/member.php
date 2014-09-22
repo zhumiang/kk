@@ -116,16 +116,16 @@ class indexmember {
 				keledatabase::getthisone("");
 				$mail = new PHPMailer(true);
 				$mail->IsSMTP();
-				$mail->Host       = "smtp.163.com"; // SMTP server
+				$mail->Host       = ""; // SMTP server
 				//$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
 				$mail->SMTPAuth   = true;                  // enable SMTP authentication
 				$mail->Port       = 25;                    // set the SMTP port for the GMAIL server
-				$mail->Username   = "zhumiang2000@163.com"; // SMTP account username
-				$mail->Password   = "111000";        // SMTP account password
+				$mail->Username   = ""; // SMTP account username
+				$mail->Password   = "";        // SMTP account password
 				$mail->AddAddress($email);
-  				$mail->SetFrom('zhumiang2000@163.com');
+  				$mail->SetFrom('');
   				$mail->Subject = 'PHPMailer Test Subject via mail(), advanced';
-  				$mail->Body  ='11111111111';
+  				$mail->Body  ='';
   				$mail->Send();
 			}
 		}
