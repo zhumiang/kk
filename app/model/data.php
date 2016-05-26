@@ -11,11 +11,11 @@ class keledata{
 	public function keledata(){
 		keledata::filter();
  		if(!get_magic_quotes_gpc()){
-			keledata::addval($_POST);
-			keledata::addval($_GET);
-			keledata::addval($_COOKIE);
+			$_POST=keledata::addval($_POST);
+			$_GET=keledata::addval($_GET);
+			$_COOKIE=keledata::addval($_COOKIE);
+			$_FILES=keledata::addval($_FILES);
 		}
-		keledata::addval($_FILES);
 	}
 	public function fordata($array,$dispatcher,$is_function){	
 		foreach ($array as $key=>$value){
